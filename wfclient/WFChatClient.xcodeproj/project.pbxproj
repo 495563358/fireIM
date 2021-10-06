@@ -995,7 +995,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MACH_O_TYPE = mh_dylib;
-				PRODUCT_BUNDLE_IDENTIFIER = cn.wildfirechat.WFChatClient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zongxiangChat.WFChatClient;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1034,7 +1034,7 @@
 					"$(PROJECT_DIR)",
 				);
 				MACH_O_TYPE = mh_dylib;
-				PRODUCT_BUNDLE_IDENTIFIER = cn.wildfirechat.WFChatClient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zongxiangChat.WFChatClient;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";

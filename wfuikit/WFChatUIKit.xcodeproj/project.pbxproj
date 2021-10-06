@@ -2684,7 +2684,7 @@
 					"@loader_path/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.wildfirechat.WFChatUIKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zongxiangChat.WFChatUIKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2724,7 +2724,7 @@
 					"@loader_path/Frameworks",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.wildfirechat.WFChatUIKit;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zongxiangChat.WFChatUIKit;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
