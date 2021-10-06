@@ -21,8 +21,8 @@ typedef NS_ENUM(NSInteger, WFCCMediaType);
  - ThemeType_White: 白色风格
  */
 typedef NS_ENUM(NSInteger, WFCUThemeType) {
-    ThemeType_WFChat,
-    ThemeType_White
+    ThemeType_White,
+    ThemeType_WFChat
 };
 
 @interface WFCUConfigManager : NSObject

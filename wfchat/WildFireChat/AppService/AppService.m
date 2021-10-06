@@ -35,14 +35,15 @@ static AppService *sharedSingleton = nil;
     return sharedSingleton;
 }
 
-- (void)login:(NSString *)user password:(NSString *)password success:(void(^)(NSString *userId, NSString *token, BOOL newUser))successBlock error:(void(^)(int errCode, NSString *message))errorBlock {
+- (void)login:(NSString *)user password:(NSString *)password success:(void(^)(NSString *userId, NSString *token, NSString *mobile, BOOL newUser))successBlock error:(void(^)(int errCode, NSString *message))errorBlock {
     
-    [self post:@"/login" data:@{@"mobile":user, @"code":password, @"clientId":[[WFCCNetworkService sharedInstance] getClientId], @"platform":@(Platform_iOS)} isLogin:YES success:^(NSDictionary *dict) {
+    [self post:@"/login" data:@{@"username":user, @"password":password, @"clientId":[[WFCCNetworkService sharedInstance] getClientId], @"platform":@(Platform_iOS)} isLogin:YES success:^(NSDictionary *dict) {
         if([dict[@"code"] intValue] == 0) {
             NSString *userId = dict[@"result"][@"userId"];
             NSString *token = dict[@"result"][@"token"];
+            NSString *mobile = dict[@"result"][@"mobile"];
             BOOL newUser = [dict[@"result"][@"register"] boolValue];
-            if(successBlock) successBlock(userId, token, newUser);
+            if(successBlock) successBlock(userId, token,mobile, newUser);
         } else {
             if(errorBlock) errorBlock([dict[@"code"] intValue], dict[@"message"]);
         }
@@ -541,6 +542,34 @@ static AppService *sharedSingleton = nil;
     NSArray<NSHTTPCookie *> *cookies = [[NSHTTPCookieStorage sharedCookieStorageForGroupContainerIdentifier:WFC_SHARE_APP_GROUP_ID] cookies];
     [cookies enumerateObjectsUsingBlock:^(NSHTTPCookie * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [[NSHTTPCookieStorage sharedCookieStorageForGroupContainerIdentifier:WFC_SHARE_APP_GROUP_ID] deleteCookie:obj];
+    }];
+}
+
+//绑定/修改手机号接口
+- (void)changeMobile:(NSString *)mobile success:(void(^)(NSString *userId, NSString *token, NSString *mobile, BOOL newUser))successBlock error:(void(^)(int errCode, NSString *message))errorBlock {
+    
+    [self post:@"/changeMobile" data:@{@"mobile":mobile, @"clientId":[[WFCCNetworkService sharedInstance] getClientId], @"platform":@(Platform_iOS)} isLogin:NO success:^(NSDictionary *dict) {
+        if([dict[@"code"] intValue] == 0) {
+            if(successBlock) successBlock(nil, nil,mobile, nil);
+        } else {
+            if(errorBlock) errorBlock([dict[@"code"] intValue], dict[@"message"]);
+        }
+    } error:^(NSError * _Nonnull error) {
+        if(errorBlock) errorBlock(-1, error.description);
+    }];
+}
+
+//修改密码
+- (void)changePassword:(NSString *)oldPassword newPwd:(NSString *)newPassword success:(void(^)(NSString *userId, NSString *token, NSString *mobile, BOOL newUser))successBlock error:(void(^)(int errCode, NSString *message))errorBlock {
+    
+    [self post:@"/changePassword" data:@{@"oldPassword":oldPassword,@"newPassword":newPassword , @"clientId":[[WFCCNetworkService sharedInstance] getClientId], @"platform":@(Platform_iOS)} isLogin:NO success:^(NSDictionary *dict) {
+        if([dict[@"code"] intValue] == 0) {
+            if(successBlock) successBlock(nil, nil,nil, nil);
+        } else {
+            if(errorBlock) errorBlock([dict[@"code"] intValue], dict[@"message"]);
+        }
+    } error:^(NSError * _Nonnull error) {
+        if(errorBlock) errorBlock(-1, error.description);
     }];
 }
 

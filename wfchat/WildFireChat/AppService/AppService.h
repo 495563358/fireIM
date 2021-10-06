@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AppService : NSObject <WFCUAppServiceProvider>
 + (AppService *)sharedAppService;
 
-- (void)login:(NSString *)user password:(NSString *)password success:(void(^)(NSString *userId, NSString *token, BOOL newUser))successBlock error:(void(^)(int errCode, NSString *message))errorBlock;
+- (void)login:(NSString *)user password:(NSString *)password success:(void(^)(NSString *userId, NSString *token, NSString *mobile, BOOL newUser))successBlock error:(void(^)(int errCode, NSString *message))errorBlock;
 
 - (void)sendCode:(NSString *)phoneNumber success:(void(^)(void))successBlock error:(void(^)(NSString *message))errorBlock;
 
@@ -54,6 +54,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 //清除应用服务认证cookies和认证token
 - (void)clearAppServiceAuthInfos;
+
+//绑定/修改手机号接口
+- (void)changeMobile:(NSString *)mobile success:(void(^)(NSString *userId, NSString *token, NSString *mobile, BOOL newUser))successBlock error:(void(^)(int errCode, NSString *message))errorBlock;
+
+//修改密码
+- (void)changePassword:(NSString *)oldPassword newPwd:(NSString *)newPassword success:(void(^)(NSString *userId, NSString *token, NSString *mobile, BOOL newUser))successBlock error:(void(^)(int errCode, NSString *message))errorBlock;
 @end
 
 NS_ASSUME_NONNULL_END

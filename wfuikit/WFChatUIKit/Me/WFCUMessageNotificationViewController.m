@@ -93,9 +93,9 @@
 //#pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if([[WFCCIMService sharedWFCIMService] isCommercialServer] && ![[WFCCIMService sharedWFCIMService] isGlobalDisableSyncDraft]) {
-        return 5;
-    } else {
         return 4;
+    } else {
+        return 3;
     }
 }
 
@@ -105,8 +105,6 @@
     } else if (section == 1) {
         return 1;
     } else if (section == 2) {
-        return 1;
-    } else if (section == 3) {
         if (self.isNoDisturb) {
             return 2;
         }
@@ -119,7 +117,7 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 3) {
+    if (indexPath.section == 2) {
         if (indexPath.row == 0) {
             WFCUGeneralSwitchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"switch"];
             if(cell == nil) {
@@ -175,13 +173,10 @@
     if (indexPath.section == 0) {
         cell.textLabel.text = WFCString(@"ReceiveNewMessageNotification");
         cell.type = SwitchType_Setting_Global_Silent;
-    } else if(indexPath.section == 1) {
-        cell.textLabel.text = WFCString(@"ReceiveVoipNotification");
-        cell.type = SwitchType_Setting_Voip_Silent;
-    } else if(indexPath.section == 2) {
+    }  else if(indexPath.section == 1) {
         cell.textLabel.text = WFCString(@"NotificationShowMessageDetail");
         cell.type = SwitchType_Setting_Show_Notification_Detail;
-    } else if(indexPath.section == 4) {
+    } else if(indexPath.section == 2) {
         cell.textLabel.text = WFCString(@"SyncDraft");
         cell.type = SwitchType_Setting_Sync_Draft;
     }

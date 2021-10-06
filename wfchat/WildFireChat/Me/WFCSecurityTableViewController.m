@@ -8,6 +8,8 @@
 
 #import "WFCSecurityTableViewController.h"
 #import <WFChatClient/WFCChatClient.h>
+#import "WFCChangeMobileController.h"
+#import "WFCChangePWDController.h"
 
 @interface WFCSecurityTableViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong)UITableView *tableView;
@@ -24,6 +26,8 @@
     }
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.sectionHeaderHeight = 10;
+    self.tableView.sectionFooterHeight = 5;
     
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     [self.tableView reloadData];
@@ -43,6 +47,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         //cell.textLabel.text = @"修改密码";
+        WFCChangeMobileController *vc = [WFCChangeMobileController new];
+        [self.navigationController pushViewController:vc animated:YES];
+    }else{
+        WFCChangePWDController *vc = [WFCChangePWDController new];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
@@ -52,14 +61,14 @@
 
 //#pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return 1;
     }
-    return 0;
+    return 1;
 }
 
 
@@ -72,12 +81,20 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.accessoryView = nil;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    
     if (indexPath.section == 0) {
+        cell.textLabel.text = LocalizedString(@"Moblie");
+        NSString *mobile = [[NSUserDefaults standardUserDefaults] objectForKey:@"mobile"];
+        cell.detailTextLabel.text = mobile?:@"未绑定";
+    }
+    else if (indexPath.section == 1) {
         cell.textLabel.text = LocalizedString(@"ChangePassword");
     }
     
     return cell;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [self.tableView reloadData];
 }
 
 /*

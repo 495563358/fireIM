@@ -76,8 +76,8 @@ alpha:1.0]
     topPos += 75;
     UIImageView *logView = [[UIImageView alloc] initWithFrame:CGRectMake((kzSCREEN_WIDTH - 216)/2, topPos, 216, 74)];
     logView.image = [UIImage imageNamed:@"login_log"];
-    logView.userInteractionEnabled = YES;
-    [logView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onSendCode:)]];
+//    logView.userInteractionEnabled = YES;
+//    [logView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onSendCode:)]];
     
     topPos += 74 + 45;
     self.userNameField = [[UITextField alloc] initWithFrame:CGRectMake(38, topPos, kzSCREEN_WIDTH - 76, 48)];
@@ -244,10 +244,13 @@ alpha:1.0]
   hud.label.text = @"登录中...";
   [hud showAnimated:YES];
   
-    [[AppService sharedAppService] login:user password:password success:^(NSString *userId, NSString *token, BOOL newUser) {
+    [[AppService sharedAppService] login:user password:password success:^(NSString * _Nonnull userId, NSString * _Nonnull token, NSString * _Nonnull mobile, BOOL newUser) {
         [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"savedName"];
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"savedToken"];
         [[NSUserDefaults standardUserDefaults] setObject:userId forKey:@"savedUserId"];
+        if (mobile && mobile.length && ![mobile isKindOfClass:NSNull.class]){
+            [[NSUserDefaults standardUserDefaults] setObject:mobile forKey:@"mobile"];
+        }
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         
@@ -260,7 +263,7 @@ alpha:1.0]
             tabBarVC.newUser = newUser;
             [UIApplication sharedApplication].delegate.window.rootViewController =  tabBarVC;
         });
-    } error:^(int errCode, NSString *message) {
+    } error:^(int errCode, NSString * _Nonnull message) {
         NSLog(@"login error with code %d, message %@", errCode, message);
       dispatch_async(dispatch_get_main_queue(), ^{
         [hud hideAnimated:YES];
