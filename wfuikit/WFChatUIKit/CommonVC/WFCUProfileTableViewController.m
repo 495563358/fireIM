@@ -402,22 +402,22 @@
             [self showSeparatorLine:self.sendMessageCell];
             
     #if WFCU_SUPPORT_VOIP
-            self.voipCallCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
-            for (UIView *subView in self.voipCallCell.subviews) {
-                [subView removeFromSuperview];
-            }
-            btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 50)];
-            [btn setImage:[UIImage imageNamed:@"video"] forState:UIControlStateNormal];
-            btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
-            [btn setTitle:WFCString(@"VOIPCall") forState:UIControlStateNormal];
-            [btn addTarget:self action:@selector(onVoipCallBtn:) forControlEvents:UIControlEventTouchDown];
-            [btn setTitleColor:[UIColor colorWithHexString:@"0x5b6e8e"] forState:UIControlStateNormal];
-            btn.titleLabel.font = [UIFont pingFangSCWithWeight:FontWeightStyleMedium size:16];
-            if (@available(iOS 14, *)) {
-                [self.voipCallCell.contentView addSubview:btn];
-            } else {
-                [self.voipCallCell addSubview:btn];
-            }
+//            self.voipCallCell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
+//            for (UIView *subView in self.voipCallCell.subviews) {
+//                [subView removeFromSuperview];
+//            }
+//            btn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 50)];
+//            [btn setImage:[UIImage imageNamed:@"video"] forState:UIControlStateNormal];
+//            btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
+//            [btn setTitle:WFCString(@"VOIPCall") forState:UIControlStateNormal];
+//            [btn addTarget:self action:@selector(onVoipCallBtn:) forControlEvents:UIControlEventTouchDown];
+//            [btn setTitleColor:[UIColor colorWithHexString:@"0x5b6e8e"] forState:UIControlStateNormal];
+//            btn.titleLabel.font = [UIFont pingFangSCWithWeight:FontWeightStyleMedium size:16];
+//            if (@available(iOS 14, *)) {
+//                [self.voipCallCell.contentView addSubview:btn];
+//            } else {
+//                [self.voipCallCell addSubview:btn];
+//            }
     #endif
         } else if([[WFCCNetworkService sharedInstance].userId isEqualToString:self.userId]) {
             
@@ -541,9 +541,9 @@
         return self.cells.count;
     } else {
         if (self.sendMessageCell) {
-            if (self.voipCallCell) {
-                return 2;
-            }
+//            if (self.voipCallCell) {
+//                return 2;
+//            }
             return 1;
         } else {
             return 1;
@@ -573,7 +573,7 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.sendMessageCell || self.voipCallCell || self.addFriendCell) {
+    if (self.sendMessageCell || self.addFriendCell) {
         return 4;
     } else {
         if(self.cells.count > 0)

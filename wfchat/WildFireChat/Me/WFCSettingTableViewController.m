@@ -189,6 +189,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"savedName"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"savedToken"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"savedUserId"];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"mobile"];
     [[AppService sharedAppService] clearAppServiceAuthInfos];
     [[NSUserDefaults standardUserDefaults] synchronize];
     

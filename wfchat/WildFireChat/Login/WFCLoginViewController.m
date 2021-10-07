@@ -56,15 +56,14 @@ alpha:1.0]
     NSString *savedName = [[NSUserDefaults standardUserDefaults] stringForKey:@"savedName"];
    
     CGRect bgRect = self.view.bounds;
-    CGFloat paddingEdge = 26;
-    CGFloat inputHeight = 40;
+    CGFloat paddingEdge = 38;
     CGFloat hintHeight = 20;
     CGFloat topPos = kStatusBarAndNavigationBarHeight;
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kzSCREEN_WIDTH, kStatusBarAndNavigationBarHeight)];
     headerView.backgroundColor = kMainColor;
     
-    self.hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(paddingEdge, kStatusBarAndNavigationBarHeight - 50, 200, 50)];
+    self.hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(26, kStatusBarAndNavigationBarHeight - 50, 200, 50)];
     self.hintLabel.textColor = [UIColor whiteColor];
     [self.hintLabel setText:@"账号登录"];
     self.hintLabel.textAlignment = NSTextAlignmentLeft;
@@ -248,7 +247,7 @@ alpha:1.0]
         [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"savedName"];
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"savedToken"];
         [[NSUserDefaults standardUserDefaults] setObject:userId forKey:@"savedUserId"];
-        if (mobile && mobile.length && ![mobile isKindOfClass:NSNull.class]){
+        if (mobile && ![mobile isKindOfClass:NSNull.class] && mobile.length){
             [[NSUserDefaults standardUserDefaults] setObject:mobile forKey:@"mobile"];
         }
         [[NSUserDefaults standardUserDefaults] synchronize];
@@ -309,9 +308,11 @@ alpha:1.0]
 - (void)updateBtn {
     if ([self isValidNumber]) {
         [self.loginBtn setBackgroundColor:[UIColor colorWithRed:0.1 green:0.27 blue:0.9 alpha:0.9]];
+        [self.loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         self.loginBtn.enabled = YES;
     } else {
         [self.loginBtn setBackgroundColor:[UIColor grayColor]];
+        [self.loginBtn setTitleColor:[UIColor colorWithHexString:@"0xb1b1b1"] forState:UIControlStateNormal];
         self.loginBtn.enabled = NO;
     }
 }
