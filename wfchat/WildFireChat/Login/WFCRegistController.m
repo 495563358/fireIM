@@ -1,12 +1,11 @@
 //
-//  WFCLoginViewController.m
+//  WFCRegistController.m
 //  Wildfire Chat
 //
 //  Created by WF Chat on 2017/7/9.
 //  Copyright © 2017年 WildFireChat. All rights reserved.
 //
 
-#import "WFCLoginViewController.h"
 #import "WFCRegistController.h"
 #import <WFChatClient/WFCChatClient.h>
 #import <WFChatUIKit/WFChatUIKit.h>
@@ -34,10 +33,11 @@ green:((float)((rgbValue & 0xFF00) >> 8)) / 255.0                               
 blue:((float)(rgbValue & 0xFF)) / 255.0                                                           \
 alpha:1.0]
 
-@interface WFCLoginViewController () <UITextFieldDelegate>
+@interface WFCRegistController () <UITextFieldDelegate>
 @property (strong, nonatomic) UILabel *hintLabel;
 @property (strong, nonatomic) UITextField *userNameField;
 @property (strong, nonatomic) UITextField *passwordField;
+@property (strong, nonatomic) UITextField *rePasswordField;
 @property (strong, nonatomic) UIButton *loginBtn;
 
 @property (strong, nonatomic) UIView *userNameLine;
@@ -49,7 +49,7 @@ alpha:1.0]
 @property (nonatomic, strong) UILabel *privacyLabel;
 @end
 
-@implementation WFCLoginViewController
+@implementation WFCRegistController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -63,10 +63,15 @@ alpha:1.0]
     
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kzSCREEN_WIDTH, kStatusBarAndNavigationBarHeight)];
     headerView.backgroundColor = kMainColor;
+    [headerView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(backAction)]];
     
-    self.hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(26, kStatusBarAndNavigationBarHeight - 50, 200, 50)];
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.frame = CGRectMake(20,kStatusBarAndNavigationBarHeight - 50 + 16,18,18);
+    imageView.image = [UIImage imageNamed:@"jiantou_copy"];
+    
+    self.hintLabel = [[UILabel alloc] initWithFrame:CGRectMake(53 , kStatusBarAndNavigationBarHeight - 50, 200, 50)];
     self.hintLabel.textColor = [UIColor whiteColor];
-    [self.hintLabel setText:@"账号登录"];
+    [self.hintLabel setText:@"账号注册"];
     self.hintLabel.textAlignment = NSTextAlignmentLeft;
     self.hintLabel.font = [UIFont pingFangSCWithWeight:FontWeightStyleRegular size:hintHeight];
     
@@ -106,6 +111,21 @@ alpha:1.0]
     self.passwordField.leftViewMode = UITextFieldViewModeAlways;
     [self.passwordField addTarget:self action:@selector(textDidChange:) forControlEvents:UIControlEventEditingChanged];
     
+    
+    topPos += 48 + 19;
+    self.rePasswordField = [[UITextField alloc] initWithFrame:CGRectMake(38, topPos, kzSCREEN_WIDTH - 76, 48)];
+    self.rePasswordField.font = [UIFont pingFangSCWithWeight:FontWeightStyleRegular size:16];
+    self.rePasswordField.placeholder = @"请重复输入密码";
+    self.rePasswordField.returnKeyType = UIReturnKeyDone;
+    self.rePasswordField.secureTextEntry = YES;
+    self.rePasswordField.keyboardType = UIKeyboardTypeASCIICapable;
+    self.rePasswordField.delegate = self;
+    self.rePasswordField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    self.rePasswordField.borderStyle = UITextBorderStyleRoundedRect;
+    self.rePasswordField.leftView = [self createLeftView:@"login_lock"];
+    self.rePasswordField.leftViewMode = UITextFieldViewModeAlways;
+    [self.rePasswordField addTarget:self action:@selector(textDidChange:) forControlEvents:UIControlEventEditingChanged];
+    
     topPos += 71;
     self.loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(paddingEdge, topPos, bgRect.size.width - paddingEdge * 2, 43)];
     [self.loginBtn addTarget:self action:@selector(onLoginButton:) forControlEvents:UIControlEventTouchDown];
@@ -118,14 +138,9 @@ alpha:1.0]
     self.loginBtn.enabled = NO;
     
     
-    topPos += 43+30;
-    UIButton *registBtn = [[UIButton alloc] initWithFrame:CGRectMake(paddingEdge, topPos, bgRect.size.width - paddingEdge * 2, 43)];
-    [registBtn addTarget:self action:@selector(onRegistButton:) forControlEvents:UIControlEventTouchDown];
-    [registBtn setTitle:@"注册账号" forState:UIControlStateNormal];
-    [registBtn setTitleColor:kMainColor forState:UIControlStateNormal];
-    registBtn.titleLabel.font = [UIFont pingFangSCWithWeight:FontWeightStyleMedium size:14];
     
     [self.view addSubview:headerView];
+    [headerView addSubview:imageView];
     [headerView addSubview:self.hintLabel];
     
     [self.view addSubview:bgView];
@@ -133,9 +148,9 @@ alpha:1.0]
     
     [self.view addSubview:self.userNameField];
     [self.view addSubview:self.passwordField];
+    [self.view addSubview:self.rePasswordField];
     
     [self.view addSubview:self.loginBtn];
-    [self.view addSubview:registBtn];
     
     self.userNameField.text = savedName;
     
@@ -157,21 +172,6 @@ alpha:1.0]
     self.navigationController.navigationBar.hidden = YES;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    if(self.isKickedOff) {
-        self.isKickedOff = NO;
-        UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:@"您的账号已在其他手机登录" preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"知道了" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            
-        }];
-
-        [actionSheet addAction:actionCancel];
-        
-        [self presentViewController:actionSheet animated:YES completion:nil];
-    }
-}
-
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.hidden = NO;
@@ -182,56 +182,8 @@ alpha:1.0]
     // Dispose of any resources that can be recreated.
 }
 
-- (void)onSendCode:(id)sender {
-    self.sendCodeBtn.enabled = NO;
-    [self.sendCodeBtn setTitle:@"短信发送中" forState:UIControlStateNormal];
-    __weak typeof(self)ws = self;
-    [[AppService sharedAppService] sendCode:self.userNameField.text success:^{
-       [ws sendCodeDone:YES];
-    } error:^(NSString * _Nonnull message) {
-        [ws sendCodeDone:NO];
-    }];
-}
-
-- (void)updateCountdown:(id)sender {
-    int second = (int)([NSDate date].timeIntervalSince1970 - self.sendCodeTime);
-    [self.sendCodeBtn setTitle:[NSString stringWithFormat:@"%ds", 60-second] forState:UIControlStateNormal];
-    if (second >= 60) {
-        [self.countdownTimer invalidate];
-        self.countdownTimer = nil;
-        [self.sendCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-        self.sendCodeBtn.enabled = YES;
-    }
-}
-- (void)sendCodeDone:(BOOL)success {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if (success) {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.mode = MBProgressHUDModeText;
-            hud.label.text = @"发送成功";
-            hud.offset = CGPointMake(0.f, MBProgressMaxOffset);
-            self.sendCodeTime = [NSDate date].timeIntervalSince1970;
-            self.countdownTimer = [NSTimer scheduledTimerWithTimeInterval:1
-                                                                target:self
-                                                                 selector:@selector(updateCountdown:)
-                                                              userInfo:nil
-                                                               repeats:YES];
-            [self.countdownTimer fire];
-            
-            
-            [hud hideAnimated:YES afterDelay:1.f];
-        } else {
-            MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.mode = MBProgressHUDModeText;
-            hud.label.text = @"发送失败";
-            hud.offset = CGPointMake(0.f, MBProgressMaxOffset);
-            [hud hideAnimated:YES afterDelay:1.f];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.sendCodeBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
-                self.sendCodeBtn.enabled = YES;
-            });
-        }
-    });
+- (void)backAction{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)resetKeyboard:(id)sender {
@@ -239,24 +191,27 @@ alpha:1.0]
     [self.passwordField resignFirstResponder];
 }
 
-- (void)onRegistButton:(UIButton *)sender{
-    WFCRegistController *vc = [WFCRegistController new];
-    vc.modalPresentationStyle = UIModalPresentationFullScreen;
-    [self presentViewController:vc animated:YES completion:nil];
-}
-
 - (void)onLoginButton:(id)sender {
     NSString *user = self.userNameField.text;
     NSString *password = self.passwordField.text;
+    NSString *repassword = self.rePasswordField.text;
   
     if (!user.length || !password.length) {
+        return;
+    }
+    
+    if (![password isEqualToString:repassword]) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.label.text = @"两次密码输入不一致";
+        [hud showAnimated:YES];
+        [hud hideAnimated:YES afterDelay:2.f];
         return;
     }
     
     [self resetKeyboard:nil];
     
   MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-  hud.label.text = @"登录中...";
+  hud.label.text = @"注册中...";
   [hud showAnimated:YES];
   
     [[AppService sharedAppService] login:user password:password success:^(NSString * _Nonnull userId, NSString * _Nonnull token, NSString * _Nonnull mobile, BOOL newUser) {
@@ -285,7 +240,7 @@ alpha:1.0]
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"登录失败";
+        hud.label.text = @"注册失败";
         hud.offset = CGPointMake(0.f, MBProgressMaxOffset);
         [hud hideAnimated:YES afterDelay:1.f];
       });
@@ -318,6 +273,8 @@ alpha:1.0]
         [self updateBtn];
     } else if (textInput == self.passwordField) {
         [self updateBtn];
+    } else if (textInput == self.rePasswordField) {
+        [self updateBtn];
     }
 }
 
@@ -334,7 +291,7 @@ alpha:1.0]
 }
 
 - (BOOL)isValidNumber {
-    if (self.userNameField.text.length && self.passwordField.text.length) {
+    if (self.userNameField.text.length && self.passwordField.text.length && self.rePasswordField.text.length) {
         return YES;
     } else {
         return NO;

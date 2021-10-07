@@ -135,6 +135,7 @@
 		90C1D912208C12A900E923F4 /* ring.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 90C1D910208C12A900E923F4 /* ring.mp3 */; };
 		90E927F222DFF45F00F168BC /* WFCPrivacyTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90E927F122DFF45F00F168BC /* WFCPrivacyTableViewController.m */; };
 		90FF267E222AB34B0001D8AF /* PCLoginConfirmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90FF267D222AB34B0001D8AF /* PCLoginConfirmViewController.m */; };
+		B543399D270ED194001D321C /* WFCRegistController.m in Sources */ = {isa = PBXBuildFile; fileRef = B543399C270ED194001D321C /* WFCRegistController.m */; };
 		B59CC008270D847B0024A5AB /* WFCChangeMobileController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59CC007270D847B0024A5AB /* WFCChangeMobileController.m */; };
 		B59CC00B270D93FE0024A5AB /* WFCChangePWDController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59CC00A270D93FE0024A5AB /* WFCChangePWDController.m */; };
 /* End PBXBuildFile section */
@@ -396,6 +397,8 @@
 		90E927F122DFF45F00F168BC /* WFCPrivacyTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WFCPrivacyTableViewController.m; sourceTree = "<group>"; };
 		90FF267C222AB34B0001D8AF /* PCLoginConfirmViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCLoginConfirmViewController.h; sourceTree = "<group>"; };
 		90FF267D222AB34B0001D8AF /* PCLoginConfirmViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCLoginConfirmViewController.m; sourceTree = "<group>"; };
+		B543399B270ED194001D321C /* WFCRegistController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WFCRegistController.h; sourceTree = "<group>"; };
+		B543399C270ED194001D321C /* WFCRegistController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WFCRegistController.m; sourceTree = "<group>"; };
 		B59CC006270D847B0024A5AB /* WFCChangeMobileController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WFCChangeMobileController.h; sourceTree = "<group>"; };
 		B59CC007270D847B0024A5AB /* WFCChangeMobileController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WFCChangeMobileController.m; sourceTree = "<group>"; };
 		B59CC009270D93FE0024A5AB /* WFCChangePWDController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WFCChangePWDController.h; sourceTree = "<group>"; };
@@ -864,6 +867,8 @@
 			children = (
 				2FEA5D6921F4AC8900280B23 /* WFCLoginViewController.h */,
 				2FEA5D6821F4AC8900280B23 /* WFCLoginViewController.m */,
+				B543399B270ED194001D321C /* WFCRegistController.h */,
+				B543399C270ED194001D321C /* WFCRegistController.m */,
 				B59CC006270D847B0024A5AB /* WFCChangeMobileController.h */,
 				B59CC007270D847B0024A5AB /* WFCChangeMobileController.m */,
 				B59CC009270D93FE0024A5AB /* WFCChangePWDController.h */,
@@ -1143,6 +1148,7 @@
 				2F4B0EB3245C232E000A41C6 /* CreateDeviceViewController.m in Sources */,
 				2F50BE84237970780049CD39 /* WFCDiagnoseViewController.m in Sources */,
 				2B840F402442111F006BE3D8 /* WFCThemeTableViewController.m in Sources */,
+				B543399D270ED194001D321C /* WFCRegistController.m in Sources */,
 				2FF07F5F21F82E7200A78A62 /* WFCSecurityTableViewController.m in Sources */,
 				2E1D200A1FAF0AE600F4405D /* main.m in Sources */,
 				9085427B2229FF160009713D /* StyleDIY.m in Sources */,
