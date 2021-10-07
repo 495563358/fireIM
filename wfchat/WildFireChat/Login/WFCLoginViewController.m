@@ -285,9 +285,8 @@ alpha:1.0]
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"登录失败";
-        hud.offset = CGPointMake(0.f, MBProgressMaxOffset);
-        [hud hideAnimated:YES afterDelay:1.f];
+        hud.label.text = message;
+        [hud hideAnimated:YES afterDelay:2.f];
       });
     }];
 }

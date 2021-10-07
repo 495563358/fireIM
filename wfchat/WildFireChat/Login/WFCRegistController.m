@@ -191,7 +191,12 @@ alpha:1.0]
     [self.passwordField resignFirstResponder];
 }
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
+
 - (void)onLoginButton:(id)sender {
+    [self.view endEditing:YES];
     NSString *user = self.userNameField.text;
     NSString *password = self.passwordField.text;
     NSString *repassword = self.rePasswordField.text;
@@ -240,8 +245,8 @@ alpha:1.0]
         
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"注册失败";
-        hud.offset = CGPointMake(0.f, MBProgressMaxOffset);
+        hud.label.text = message;
+//        hud.offset = CGPointMake(0.f, kzSCREEN_HEIGHT/2);
         [hud hideAnimated:YES afterDelay:1.f];
       });
     }];
