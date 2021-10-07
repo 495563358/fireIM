@@ -214,7 +214,7 @@ alpha:1.0]
   hud.label.text = @"注册中...";
   [hud showAnimated:YES];
   
-    [[AppService sharedAppService] login:user password:password success:^(NSString * _Nonnull userId, NSString * _Nonnull token, NSString * _Nonnull mobile, BOOL newUser) {
+    [[AppService sharedAppService] regist:user password:password success:^(NSString * _Nonnull userId, NSString * _Nonnull token, NSString * _Nonnull mobile, BOOL newUser) {
         [[NSUserDefaults standardUserDefaults] setObject:user forKey:@"savedName"];
         [[NSUserDefaults standardUserDefaults] setObject:token forKey:@"savedToken"];
         [[NSUserDefaults standardUserDefaults] setObject:userId forKey:@"savedUserId"];

@@ -52,6 +52,23 @@ static AppService *sharedSingleton = nil;
     }];
 }
 
+- (void)regist:(NSString *)user password:(NSString *)password success:(void(^)(NSString *userId, NSString *token, NSString *mobile, BOOL newUser))successBlock error:(void(^)(int errCode, NSString *message))errorBlock {
+    
+    [self post:@"/register" data:@{@"username":user, @"password":password, @"clientId":[[WFCCNetworkService sharedInstance] getClientId], @"platform":@(Platform_iOS)} isLogin:YES success:^(NSDictionary *dict) {
+        if([dict[@"code"] intValue] == 0) {
+            NSString *userId = dict[@"result"][@"userId"];
+            NSString *token = dict[@"result"][@"token"];
+            NSString *mobile = dict[@"result"][@"mobile"];
+            BOOL newUser = [dict[@"result"][@"register"] boolValue];
+            if(successBlock) successBlock(userId, token,mobile, newUser);
+        } else {
+            if(errorBlock) errorBlock([dict[@"code"] intValue], dict[@"message"]);
+        }
+    } error:^(NSError * _Nonnull error) {
+        if(errorBlock) errorBlock(-1, error.description);
+    }];
+}
+
 - (void)sendCode:(NSString *)phoneNumber success:(void(^)(void))successBlock error:(void(^)(NSString *message))errorBlock {
     
     [self post:@"/send_code" data:@{@"mobile":phoneNumber} isLogin:NO success:^(NSDictionary *dict) {

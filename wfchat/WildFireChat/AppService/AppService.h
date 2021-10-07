@@ -55,6 +55,9 @@ NS_ASSUME_NONNULL_BEGIN
 //清除应用服务认证cookies和认证token
 - (void)clearAppServiceAuthInfos;
 
+//注册
+- (void)regist:(NSString *)user password:(NSString *)password success:(void(^)(NSString *userId, NSString *token, NSString *mobile, BOOL newUser))successBlock error:(void(^)(int errCode, NSString *message))errorBlock;
+
 //绑定/修改手机号接口
 - (void)changeMobile:(NSString *)mobile success:(void(^)(NSString *userId, NSString *token, NSString *mobile, BOOL newUser))successBlock error:(void(^)(int errCode, NSString *message))errorBlock;
 
